@@ -3,11 +3,10 @@ import "./App.css";
 import { connect } from "react-redux";
 import GifList from "./components/GifList";
 import GifSearchForm from "./components/GifSearchForm";
-import { fetchStart, fetchSuccess } from "./Actions";
-import axios from "axios";
+import { fetchStart, fetchSuccess, getGifs } from "./Actions";
 
-const URL =
-  "https://api.giphy.com/v1/gifs/search?api_key=PPkyMBCwPXgztm52e8iMnSfxCgf9wrMg&q=dog&limit=10&offset=0&rating=g&lang=en";
+export const URL = (searchTerm) =>
+  `https://api.giphy.com/v1/gifs/search?api_key=PPkyMBCwPXgztm52e8iMnSfxCgf9wrMg&q=${searchTerm}&limit=10&offset=0&rating=g&lang=en`;
 
 const mapStateToProps = (state) => {
   return {
@@ -20,17 +19,15 @@ const mapActionsToProps = () => {
   return {
     fetchStart: fetchStart,
     fetchSuccess: fetchSuccess,
+    getGifs: getGifs,
   };
 };
 
 function App(props) {
   console.log(props);
-  const { loading, error, fetchStart, fetchSuccess } = props;
+  const { loading, error, fetchStart, fetchSuccess, getGifs } = props;
   useEffect(() => {
-    fetchStart();
-    axios.get(URL).then((res) => {
-      fetchSuccess(res.data.data);
-    });
+    getGifs("cat");
   }, []);
   return (
     <div className="App">

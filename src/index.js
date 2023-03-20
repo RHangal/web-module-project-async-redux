@@ -6,11 +6,12 @@ import "./index.css";
 
 import gifReducer from "./reducer";
 
-import { createStore } from "@reduxjs/toolkit";
+import { createStore, applyMiddleware } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 
-const store = createStore(gifReducer);
+const store = createStore(gifReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
